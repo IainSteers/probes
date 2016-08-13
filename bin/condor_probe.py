@@ -34,6 +34,7 @@ class CondorProbe(fifemon.Probe):
         self.post_pool_prio = kwargs.pop('post_pool_prio',True)
         self.post_pool_jobs = kwargs.pop('post_pool_jobs',False)
         self.use_gsi_auth = kwargs.pop('use_gsi_auth',False)
+        self.use_acct_ads = kqargs.pop('use_acct_ads', False)
         self.x509_user_key = kwargs.pop('x509_user_key',"")
         self.x509_user_cert = kwargs.pop('x509_user_cert',"")
 
@@ -73,8 +74,8 @@ class CondorProbe(fifemon.Probe):
             if self.use_graphite:
                 self.graphite.send_dict(self.namespace+".slots", data, send_data=(not self.test))
         if self.post_pool_prio:
-            logger.info('querying pool {0} priorities'.format(self.pool))
-            data = condor.get_pool_priorities(self.pool, self.delay, self.retries)
+            logger.info('querying pool {0} priorities'.format(self.pool)):
+            data = condor.get_pool_priorities(self.pool, self.use_acct_ads, self.delay, self.retries)
             if self.use_graphite:
                 self.graphite.send_dict(self.namespace+".priorities", data, send_data=(not self.test))
         if self.post_pool_jobs:
