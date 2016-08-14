@@ -74,7 +74,7 @@ class CondorProbe(fifemon.Probe):
             if self.use_graphite:
                 self.graphite.send_dict(self.namespace+".slots", data, send_data=(not self.test))
         if self.post_pool_prio:
-            logger.info('querying pool {0} priorities'.format(self.pool)):
+            logger.info('querying pool {0} priorities'.format(self.pool))
             data = condor.get_pool_priorities(self.pool, self.use_acct_ads, self.delay, self.retries)
             if self.use_graphite:
                 self.graphite.send_dict(self.namespace+".priorities", data, send_data=(not self.test))
