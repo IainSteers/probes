@@ -17,7 +17,7 @@ def find_bin(value, bins):
 
 
 class Jobs(object):
-    def __init__(self, pool="localhost"):
+    def __init__(self, pool="localhost", site_classad):
         self.pool = pool
         self.collector = htcondor.Collector(pool)
         self.bins=[(300,       'recent'),
@@ -60,8 +60,8 @@ class Jobs(object):
                 counters.append(".idle.usage_models.unknown")
         elif job_classad["JobStatus"] == 2:
             counters = [".running.totals"]
-            if "MATCH_GLIDEIN_Site" in job_classad:
-                site = job_classad["MATCH_GLIDEIN_Site"]
+            if self.site_classad in job_classad:
+                site = job_classad[self.site_classad]
                 if site == "FNAL" and "MATCH_EXP_JOBGLIDEIN_ResourceName" in job_classad:
                     site = job_classad["MATCH_EXP_JOBGLIDEIN_ResourceName"]
                 counters.append(".running.sites." + site)
