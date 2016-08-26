@@ -17,7 +17,7 @@ def find_bin(value, bins):
 
 
 class Jobs(object):
-    def __init__(self, pool="localhost", site_classad):
+    def __init__(self, pool="localhost", site_classad=None):
         self.pool = pool
         self.collector = htcondor.Collector(pool)
         self.bins=[(300,       'recent'),
