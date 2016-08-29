@@ -37,9 +37,10 @@ class CondorProbe(fifemon.Probe):
         self.use_acct_ads = kwargs.pop('use_acct_ads', False)
         self.x509_user_key = kwargs.pop('x509_user_key',"")
         self.x509_user_cert = kwargs.pop('x509_user_cert',"")
+	self.site_classad = kwargs.pop('site_classad', "")
 
         if self.post_pool_jobs:
-            self.jobs = condor.Jobs(self.pool)
+            self.jobs = condor.Jobs(self.pool, self.site_classad)
 
         super(CondorProbe, self).__init__(*args, **kwargs)
 
@@ -124,6 +125,7 @@ def get_options():
         'post_pool_jobs':    config.getboolean("condor", "post_pool_jobs"),
         'use_gsi_auth':      config.getboolean("condor", "use_gsi_auth"),
         'use_acct_ads':      config.getboolean("condor", "use_acct_ads"),
+	'site_classad':	     config.get("condor", "site_classad"),
         'x509_user_key':     config.get("condor", "X509_USER_KEY"),
         'x509_user_cert':    config.get("condor", "X509_USER_CERT"),
         'use_graphite':      config.getboolean("graphite", "enable"),
