@@ -8,7 +8,7 @@ import htcondor
 logger = logging.getLogger(__name__)
 
 
-def get_negotiator_prios(pool, retry_delay=30, max_retries=4):
+def get_accounting_ads(pool, retry_delay=30, max_retries=4):
     coll =  htcondor.Collector(pool)
     retries = 0
     acct_ads = None
@@ -16,14 +16,14 @@ def get_negotiator_prios(pool, retry_delay=30, max_retries=4):
         try:
             acct_ads = coll.query(htcondor.AdTypes.Any, 'MyType =?= "Accounting"')
         except:
-            logging.warning("Trouble communicating with pool {0} negotiator, retrying in {1}s.".format(pool,retry_delay))
+            logging.warning("Trouble communicating with pool {0} collector, retrying in {1}s.".format(pool,retry_delay))
             retries += 1
             time.sleep(retry_delay)
         else:
             break
     return acct_ads
 
-def get_accounting_ads(pool, retry_delay=30, max_retries=4):
+def get_negotiator_prios(pool, retry_delay=30, max_retries=4):
     coll =  htcondor.Collector(pool)
     retries = 0
     prio = None
